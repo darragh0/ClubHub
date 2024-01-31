@@ -4,6 +4,4 @@
 .modules/.__pycache__/
 .venv/
 
-.flaskenv
-requirements.txt
 *.pyc

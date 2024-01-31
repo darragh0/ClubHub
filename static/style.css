@@ -1,11 +1,145 @@
+/* Importing the "Raleway" font */
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+/* Color constants */
 :root {
     --light-grey: #8a8988;
+    --light-blue: #0077b6;
+    --lighter-blue: #0096c7;
+    --even-lighter-blue: #90e0ef;
+    --dark-blue: #03045e;
+    --light-green: #5afa8d;
+    --white: #ffffff;
+    --black: #000000;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--dark-blue);
+    font-family: "Raleway", Arial, serif;
+    color: var(--white);
+}
+
+h1 {
+    margin: 1em;
+}
 
 input {
     display: block;
-    margin-bottom: 10px;
-    border: 2px solid var(--light-grey);
+    outline: none;
+    border: none;
+    margin: 1em 1em 1em 2em;
+    padding: 10px;
+    width: 15%;
     border-radius: 5px;
 }
+
+button {
+    border: none;
+    margin: 1em 1em 1em 2em;
+    padding: 10px;
+    width: 10%;
+    border-radius: 5px;
+    background-color: var(--light-green);
+}
+
+button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+form#login-form span#input-error-msg {
+    margin: 1em 1em 1em 2.2em;
+    display: block;
+    color: red;
+    font-size: 13px;
+}
+
+/* ======================= Navigation bar start ======================= */
+
+nav {
+    display: grid;
+    grid-template-columns: 1fr auto auto 1fr;
+    background-color: var(--light-blue);
+    overflow: hidden;
+}
+
+nav div {
+    display: flex;
+}
+
+nav div.navbar-left {
+    grid-row: 1;
+    grid-column: 1;
+    justify-content: left;
+}
+
+nav div.navbar-center {
+    grid-row: 1;
+    grid-column: auto;
+    justify-content: center;
+    transition: height 0.25s;
+}
+
+nav div.navbar-right {
+    grid-row: 1;
+    grid-column: -2;
+    justify-content: right;
+}
+
+nav div.active {
+    background-color: var(--lighter-blue);
+}
+
+nav div a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    line-height: 1rem;
+    text-decoration: none;
+    height: 2.75rem;
+    padding: 0 1rem;
+    font-size: 1rem;
+    /*transition: opacity ease 1.5s;*/
+}
+
+nav div a:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+nav div.active a {
+    text-decoration: underline;
+    text-decoration-thickness: 0.075rem;
+}
+
+nav div a#hamburger {
+    visibility: hidden;
+}
+
+@media screen and (max-width: 600px) {
+
+    nav div a#hamburger {
+        visibility: visible;
+    }
+
+    nav {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    nav div.navbar-center {
+        height: 0;
+        grid-row: auto;
+        grid-column: span 2;
+    }
+
+    nav div.navbar-center a {
+        width: 100%;
+        /*opacity: 0;*/
+    }
+
+}
+
+/* ======================= Navigation bar end ======================= */
