@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <header>
+        <h1 style="color: white;">{{ header if header else "Welcome to your dashboard,  " ~ coordinator_name ~ "!" }}</h1>
+
+    </header>
+<br><br>
+    <style>
+        body {
+            background-color: var(--dark-blue);
+        }
+    </style>
+    <link rel="stylesheet" href="static\style.css">
+
+    <!-- Club Description -->
+<div class="card card-custom" >
+    <div class="card-body">
+      <h5 class="card-title">Club title</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">Club description</h6>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ull.</p>
+      <a href="#" class="card-link  float-right">Edit</a>
+
+      <!-- Members -->
+    </div>
+  </div><br>
+  <div class="card card-custom">
+    <div class="card-body">
+        <h5 class="card-title">Members</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Click to view a list of members</h6>
+        <br>
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('memview', status = 'Active')}}" class="card-link custom-link mr-5 ml-1">{{ active_users }} Active members</a>
+            <a href="{{ url_for('memview', status = 'Pending')}}" class="card-link custom-link text-right ml-5">{{ pending_users }} Pending Members</a>
+        </div>
+    </div>
+
+    <!-- EVENTS -->
+</div>
+<br><br>
+<div class="card card-custom" >
+    <div class="card-body">
+        <h5 class="card-title">Upcoming events</h5>
+
+    <div class="list-group card-custom">
+        <a href="#" class="list-group-item list-group-item-action " aria-current="true">
+          The current link item
+        </a>
+        <a href="{{ url_for('edit_event')}}" class="list-group-item list-group-item-action">A second link item</a>
+        <a href="{{ url_for('edit_event')}}" class="list-group-item list-group-item-action">A third link item</a>
+        <a href="{{ url_for('edit_event')}}" class="list-group-item list-group-item-action">A fourth link item</a>    
+      
+      <br><a href="{{ url_for('see_events', timeline = 'Upcoming')}}" class="card-link">View More</a><br>
+      <a class="btn btn-primary" href="{{ url_for('see_events', timeline = 'Past') }}"role="button">Past Events</a><br>
+
+      <a class="btn btn-warning" href="{{ url_for('edit_event')}}"role="button">Add Event</a>
+
+    </div></div>
+    </div>
+  </div>
+{% endblock %}

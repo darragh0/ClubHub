@@ -143,3 +143,16 @@ nav div a#hamburger {
 }
 
 /* ======================= Navigation bar end ======================= */
+
+/* ======================= Coordinator Home Page start ======================= */
+
+.card-custom {
+    margin-bottom: 20px; /* Adjust the margin as needed */
+    margin-top: 20px;    /* Adjust the margin as needed */
+    margin-right: 20px;  /* Adjust the margin as needed */
+    margin-left: 20px;   /* Adjust the margin as needed */
+}
+.custom-link {
+    font-size: 40px; /* Adjust the font size as needed */
+    font-family: "Tahoma";
+}

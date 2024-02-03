@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <header>
+        <h1 style="color: white;">{{ ""~ timeline~ " events" }}</h1>
+    </header>
+    <bk></bk>
+    <style>
+        body {
+            background-color: #03045e;
+        }
+    </style>
+<div class="card card-custom" >
+    <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-body-secondary">Click on an event to view details.</h6>
+        <div class="list-group">
+            <a href="{{ url_for('edit_event')}}" class="list-group-item list-group-item-action " aria-current="true">
+              The current link item
+            </a>
+            <a href="{{ url_for('edit_event')}}" class="list-group-item list-group-item-action">A second link item</a>
+            <a href="{{ url_for('edit_event')}}" class="list-group-item list-group-item-action">A third link item</a>
+            <a href="{{ url_for('edit_event')}}" class="list-group-item list-group-item-action">A fourth link item</a>
+          </div>
+    </div></div>
+{% endblock %}
+<!-- TODO make dropdown button work, make it update the value of member value. Make save delete all rejected members. Make buttons in line with information.  -->

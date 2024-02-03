@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <header>
+        <h1>{{ header if header else "Welcome to your dashboard, Coordinator!" }}</h1>
+    </header>
+    <bk></bk>
+    <style>
+        body {
+            background-color: #03045e;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- add edit button, text box -->
+                <div class="card text-bg-secondary mb-3" style="width: 18rem;">
+                    <img src="Images\locker_room.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Edit club description</h5>
+                        <p class="card-text">Enter a description for your club</p>
+                        <a href="#" class="btn btn-primary">Submit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-bg-secondary mb-3" style="width: 18rem;">
+                    <img src="Images\members.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Stats</h5>
+                        <p class="card-text">An overview of how your club is doing</p>
+                        <a href="#" class="btn btn-primary">Manage members</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-bg-secondary mb-3" style="width: 18rem;">
+                    <img src="Images\events.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Events</h5>
+                        <p class="card-text">View past events and manage and plan upcoming events</p>
+                        <a href="#" class="btn btn-primary">Manage events</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
