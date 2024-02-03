@@ -13,14 +13,50 @@
     </style>
     <link rel="stylesheet" href="static\style.css">
 
-    <!-- Club Description -->
-<div class="card card-custom" >
-    <div class="card-body">
-      <h5 class="card-title">Club title</h5>
+<!-- Club Description -->
+<div class="card card-custom">
+  <div class="card-body">
+      <h5 class="card-title" id="Title">Club title</h5>
       <h6 class="card-subtitle mb-2 text-body-secondary">Club description</h6>
-      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ull.</p>
-      <a href="#" class="card-link  float-right">Edit</a>
+      <p class="card-text" id="editable_text" contenteditable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ull.</p>
+      <button class="btn btn-warning" onclick="toggleEditMode('editable_text')">Edit</button>
+  </div>
+</div>
 
+<script>
+  function toggleEditMode(elementId) {
+      var editableElement = document.getElementById(elementId);
+      var button = document.querySelector('.btn-warning');
+
+      if (editableElement.contentEditable === 'false') {
+        // I want to add a border around the text here
+        editableElement.style.border = '1px solid #ccc';
+
+          // Enable editing
+          editableElement.contentEditable = 'true';
+          button.innerText = 'Save';
+      } else {
+          // Disable editing
+          editableElement.style.border = '0px solid #ccc';
+
+          editableElement.contentEditable = 'false';
+          button.innerText = 'Edit';
+          saveText(elementId);
+      }
+  }
+
+  function saveText(elementId) {
+      var editableElement = document.getElementById(elementId);
+      var editedText = editableElement.innerText;
+
+      // You can now send the edited text to the server using AJAX
+      // and update it in the backend database, if applicable.
+      // This example only logs the edited text to the console.
+      console.log("Edited Text:", editedText);
+  }
+</script>
+
+  
       <!-- Members -->
     </div>
   </div><br>
