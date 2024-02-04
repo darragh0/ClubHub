@@ -66,8 +66,8 @@
         <h6 class="card-subtitle mb-2 text-body-secondary">Click to view a list of members</h6>
         <br>
         <div class="d-flex justify-content-between">
-            <a href="{{ url_for('memview', status = 'Active')}}" class="card-link custom-link mr-5 ml-1">{{ active_users }} Active members</a>
-            <a href="{{ url_for('memview', status = 'Pending')}}" class="card-link custom-link text-right ml-5">{{ pending_users }} Pending Members</a>
+          <a href="{{ url_for('memview', status = 'Active')}}" class="card-link custom-link" style="margin-left: 100px;">{{ active_users }} Active members</a>
+          <a href="{{ url_for('memview', status = 'Pending')}}" class="card-link custom-link" style="margin-right: 100px;">{{ pending_users }} Pending Members</a>
         </div>
     </div>
 
