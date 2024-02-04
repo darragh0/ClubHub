@@ -32,12 +32,19 @@ def cohome():
     return render_template("Coordinator/coordinator_dashboard.html", coordinator_name = "John Doe", active_users = 40, pending_users = 3)
 
 @app.route("/menview/<status>")
+def parview(status):
+    if "user" in session:
+        user: str = session["user"]
+        return render_template("index.html", header=f"Hello {user}!")
+    return render_template("Coordinator/Coordinator_participant_view.html", status = status)
+
+
+@app.route("/participantview/<status>")
 def memview(status):
     if "user" in session:
         user: str = session["user"]
         return render_template("index.html", header=f"Hello {user}!")
     return render_template("Coordinator/view_members.html", status = status)
-
 
 @app.route("/eventview/<timeline>")
 def see_events(timeline):
