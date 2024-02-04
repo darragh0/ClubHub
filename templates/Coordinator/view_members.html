@@ -2,7 +2,7 @@
 
 {% block header %}
     <header>
-        <h1 style="color: white;">{{ header if header else "View your  " ~ status~ " members" }}</h1>
+        <h1 style="color: white;">{{ header if header else "View your " ~ status ~ " members" }}</h1>
     </header>
     <bk></bk>
     <style>
@@ -10,29 +10,50 @@
             background-color: #03045e;
         }
     </style>
-<div class="card card-custom" >
-    <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-body-secondary">Click to edit member status. Note: rejecting a user will detelete them from the database. Click save to update.</h6>
-        <button type="button" class="btn btn-primary">Delete rejected members</button>
-
-        <ul class="list-group">
-            <li class="list-group-item">An item
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ status }}
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-            <li class="list-group-item">A fourth item</li>
-            <li class="list-group-item">And a fifth one</li>
-        </ul>
-        
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').click(function () {
+                var selectedOption = $(this).text();
+                $('#dropdownMenuButton').text(selectedOption);
+            });
+        });
+    </script>
 {% endblock %}
-<!-- TODO make dropdown button work, make it update the value of member value. Make save delete all rejected members. Make buttons in line with information.  -->
+
+{% block content %}
+    <div class="card card-custom">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-body-secondary">Click to edit member status. Note: rejecting a user will delete them from the database. Click save to update.</h6>
+            <a class="btn btn-primary" href="{{ url_for('cohome')}}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Delete rejected members and save</a>
+
+            <ul class="list-group">
+                <li class="list-group-item " style="background-color: var(--dark-blue); color: white">
+                    User1 <br><br>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>{{ status }}</option>
+                        <option value="1">Approved</option>
+                        <option value="2">Pending</option>
+                        <option value="3">Rejected</option>
+                      </select>
+                </li>
+                <li class="list-group-item " style="background-color: var(--dark-blue); color: white">User2<br><br>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>{{ status }}</option>
+                    <option value="1">Approved</option>
+                    <option value="2">Pending</option>
+                    <option value="3">Rejected</option>
+                  </select></li>
+                <li class="list-group-item" style="background-color: var(--dark-blue); color: white">User3<br><br>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>{{ status }}</option>
+                    <option value="1">Approved</option>
+                    <option value="2">Pending</option>
+                    <option value="3">Rejected</option>
+                  </select></li>
+
+                  <!-- Will have to change this to a for loop of some type -->
+            </ul>
+        </div>
+    </div>
+{% endblock %}
