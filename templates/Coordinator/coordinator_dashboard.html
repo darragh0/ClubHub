@@ -16,10 +16,10 @@
 <!-- Club Description -->
 <div class="card card-custom">
   <div class="card-body">
-      <h5 class="card-title" id="Title">Club title</h5>
+      <h5 class="card-title" id="editable_text1" contenteditable="false">{{ club_title }}</h5>
       <h6 class="card-subtitle mb-2 text-body-secondary">Club description</h6>
-      <p class="card-text" id="editable_text" contenteditable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ull.</p>
-      <button class="btn btn-warning" onclick="toggleEditMode('editable_text')">Edit</button>
+      <p class="card-text" id="editable_text2" contenteditable="false">{{ club_description }}</p>
+      <button class="btn btn-warning" onclick="toggleEditMode('editable_text1'), toggleEditMode('editable_text2')">Edit</button>
   </div>
 </div>
 
@@ -97,7 +97,7 @@
     height: 40px; /* Adjust the height according to your preference */
   }
         </style>
-        
+  <!-- this has to have some way of being modularised - variables have to be able to be subbed in but also we must eb able to display any number of events. -->
         <ul class="list-group">
           <li class="list-group-item">
             <span class="date-column">2024-10-12</span>

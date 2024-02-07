@@ -29,7 +29,7 @@ def cohome():
     if "user" in session:
         user: str = session["user"]
         return render_template("index.html", header=f"Hello {user}!")
-    return render_template("Coordinator/coordinator_dashboard.html", coordinator_name = "John Doe", active_users = 40, pending_users = 3)
+    return render_template("Coordinator/coordinator_dashboard.html", coordinator_name = "John Doe", active_users = 40, pending_users = 3, club_title = "Club 1", club_description = "Description 1")
 
 @app.route("/menview/<status>")
 def parview(status):
