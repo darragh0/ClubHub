@@ -8,6 +8,7 @@
 {% block header %}
     <header>
         <h1 style="color: white;">{{ header if header else "View your " ~ status ~ " members" }}</h1>
+
     </header>
     <style>
         body {
@@ -26,14 +27,17 @@
 {% endblock %}
 
 {% block content %}
+<p>{{ status }}</p>
+
     <div class="card card-custom">
         <div class="card-body">
             <h6 class="card-subtitle mb-2 white-txt">Click to edit member status. Note: rejecting a user will delete
                 them from the database. Click save to update.</h6>
             <a class="btn btn-warning custom-button" href="{{ url_for('jean_blueprint.cohome') }}"
                style="--bs-btn-font-size: .75rem;">Delete rejected members and save</a>
-
-            <ul class="list-group light">
+               <ul class="list-group light"></ul>
+            {% for user in status_users %}
+            
                 <li class="list-group-item " style="background-color: var(--light-blue); color: white">
                     User1 <br><br>
                     <select class="form-select" aria-label="Default select example">
@@ -42,24 +46,11 @@
                         <option value="2">Pending</option>
                         <option value="3">Rejected</option>
                     </select>
+
                 </li>
-                <li class="list-group-item " style="background-color: var(--light-blue); color: white">User2<br><br>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>{{ status }}</option>
-                        <option value="1">Approved</option>
-                        <option value="2">Pending</option>
-                        <option value="3">Rejected</option>
-                    </select></li>
-                <li class="list-group-item" style="background-color: var(--light-blue); color: white">User3<br><br>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>{{ status }}</option>
-                        <option value="1">Approved</option>
-                        <option value="2">Pending</option>
-                        <option value="3">Rejected</option>
-                    </select></li>
+            {% endfor %}
 
                 <!-- Will have to change this to a for loop of some type -->
-            </ul>
         </div>
-    </div>
+    </div> -->
 {% endblock %}

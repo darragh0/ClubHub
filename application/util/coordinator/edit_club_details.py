@@ -119,10 +119,10 @@ select users.*
 from users join club_memberships on users.user_id = club_memberships.user_id
 where club_memberships.validity = 'Pending' and club_memberships.club_id = {club_id};
 """
-view_active_members = """
+view_members = """
 select users.*
 from users join club_memberships on users.user_id = club_memberships.user_id
-where club_memberships.validity = 'Approved' and club_memberships.club_id = {club_id};
+where club_memberships.validity = '{status}' and club_memberships.club_id = {club_id};
 """
 add_member = """
 insert into club_memberships(club_id, user_id)
@@ -222,6 +222,12 @@ from clubs
 where club_id = {club_id};
 """
 
+get_coordinator_name = """
+select u.first_name, u.last_name
+from users u join clubs c on u.user_id = c.creator
+where c.club_id = {club_id};
+"""
+
 
 count_upcoming_events= """
 select count(event_id)
@@ -231,8 +237,7 @@ where club_id = {club_id} and date_and_time > CURRENT_TIMESTAMP;
 count_past_events= """
 select count(event_id)
 from events
-where club_id = {club_id} and date_and_time < CURRENT_TIMESTAMP;
-"""
+where club_id = {club_id} and date_and_time < CURRENT_TIMESTAMP;"""
 
 
 #TODO I've done this with string formatting, ask Darragh what the original idea was again as I have forgotten.

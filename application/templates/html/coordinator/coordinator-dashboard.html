@@ -108,9 +108,9 @@
             <h6 class="card-subtitle mb-2 vlight_blue_txt">Click to view a list of members</h6>
             <br>
             <div class="d-flex justify-content-between">
-                <a href="{{ url_for('jean_blueprint.memview', status = 'Active') }}" class="card-link custom-link"
+                <a href="{{ url_for('jean_blueprint.view_members', status = 'Approved') }}" class="card-link custom-link"
                    style="margin-left: 100px;">{{ active_users }} Active members</a>
-                <a href="{{ url_for('jean_blueprint.memview', status = 'Pending') }}" class="card-link custom-link"
+                <a href="{{ url_for('jean_blueprint.view_members', status = 'Pending') }}" class="card-link custom-link"
                    style="margin-right: 100px;">{{ pending_users }} Pending Members</a>
             </div>
         </div>

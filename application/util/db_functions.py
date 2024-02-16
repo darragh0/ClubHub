@@ -3,7 +3,11 @@ from typing import Optional
 
 from flask import g, current_app
 
+
+
 DB_PATH: str = "application/database/database.db"
+
+
 
 
 def get_db() -> Connection:
@@ -49,6 +53,7 @@ def query_db(query: str, *args, single: bool = False) -> list[Row] | Row | None:
     return results[0] if single else results
 
 
+
 def modify_db(statement: str, *args) -> None:
     """
     Execute an SQLite manipulation statement on the database.
@@ -87,6 +92,7 @@ def get_last_user() -> Row | None:
     """
 
     return query_db("SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1", single=True)
+
 
 
 def create_user(
@@ -146,6 +152,7 @@ def create_user(
     return False
 
 
+
 def get_users_info(user_type: Optional[str] = None, *, admin_permission: Optional[bool] = None) -> list[Row] | None:
     """
     Returns a list containing the rows from the users table, if there are any.
@@ -192,8 +199,13 @@ def get_users_info(user_type: Optional[str] = None, *, admin_permission: Optiona
     return user_results
 
 
+
+
+
 def get_user_info(user_id: int) -> Row | None:
     return query_db(f"SELECT * FROM users WHERE user_id={user_id}", single=True)
+
+
 
 
 def delete_user(*, username: Optional[str] = None, user_id: Optional[int] = None) -> None:  # noqa

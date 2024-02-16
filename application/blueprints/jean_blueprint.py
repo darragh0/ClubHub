@@ -6,46 +6,15 @@ from ..util.coordinator import edit_club_details as ecd
 import logging
 
 jean_blueprint = Blueprint("jean_blueprint", __name__)
-coordinator_name = "John Doe"
 
 
-# @jean_blueprint.route("/cohome")
-# def cohome():
-#     if "user" in session:
-#         user: str = session["user"]
-#         return render_template("html/misc/default-home.html", header=f"Hello {user}!")
-#     # club_id = club_id
-#     club_details = dbf.query_db(ecd.get_club_details.format(club_id=club_id))
-#     club_name = club_details["club_name"]
-#     club_description = club_details["club_description"]
-#     number_of_active_users = dbf.query_db(ecd.count_approved_members.format(club_id=club_id))
-#     number_of_pending_users = dbf.query_db(ecd.count_pending_members.format(club_id=club_id))
-
-#     # TODO add the for loop thingy to display details of each event.
-#     # TODO this is kinda fine for dispaying info I hope
-#     # TODO but need to add the functionality to write to the database when save is pressed.
-#     # do form 
-
-#     return render_template("html/coordinator/coordinator-dashboard.html", coordinator_name=coordinator_name,
-#                            club_id=club_id, active_users=number_of_active_users, pending_users=number_of_pending_users,
-#                            club_title=club_name, club_description=club_description)
-
-
-# @jean_blueprint.route("/cohome", methods=["POST"])
-# def save_club_details():
-#     club_name = request.form["club_name"]
-#     club_description = request.form["club_description"]
-#     number_of_active_users = dbf.query_db(ecd.count_approved_members.format(club_id=club_id))
-#     number_of_pending_users = dbf.query_db(ecd.count_pending_members.format(club_id=club_id))
-#     dbf.modify_db(ecd.save_club_details.format(club_id=club_id, club_name=club_name, club_description=club_description))
-#     return render_template("html/coordinator/coordinator-dashboard.html", coordinator_name=coordinator_name,
-#                            club_id=club_id, active_users=number_of_active_users, pending_users=number_of_pending_users,
-#                            club_title=club_name, club_description=club_description)
-
+club_id = 0
+# coordinator_name = "Jean"
 
 
 from flask import request, render_template
 
+#-------------------Start of coordinator dashboard--------------------------------------------------------------------------
 
 @jean_blueprint.route("/cohome", methods=["GET"])
 def cohome():
@@ -55,6 +24,13 @@ def cohome():
     if "user" in session:
         user = session["user"]
         return render_template("html/misc/default-home.html", header=f"Hello {user}!")
+    
+    coordinator_info = dbf.query_db(ecd.get_coordinator_name.format(club_id=0))
+
+    if coordinator_info:
+        coordinator_name = f"{coordinator_info[0]['first_name']} {coordinator_info[0]['last_name']}"
+    else:
+        coordinator_name = "Coordinator not found"
 
     club_details = dbf.query_db(ecd.get_club_details.format(club_id=club_id))[0]
     club_name = club_details["club_name"]
@@ -64,9 +40,7 @@ def cohome():
     number_of_pending_users = dbf.query_db(ecd.count_pending_members.format(club_id=club_id))[0][0]
 
 
-
-
-
+    
     limited_upcoming_events = dbf.query_db(ecd.limited_view_all_upcoming_events.format(club_id=club_id, limit =3))
     event_details = []
     if limited_upcoming_events is None:
@@ -94,8 +68,7 @@ def cohome():
                         club_title=club_name,
                         club_description=club_description,
                         limited_events=event_details
-
-                        )
+                                                              )
 
 @jean_blueprint.route("/cohome", methods=["POST"])
 def save_club_details():
@@ -126,24 +99,41 @@ def save_club_details():
 
 
 
+#--------------------member_view-----------------------------
 
 
-@jean_blueprint.route("/menview/<status>")
+
+@jean_blueprint.route("/memview/<status>", methods=["GET"])
+def view_members(status):
+    if "user" in session:
+        user: str = session["user"]
+        return render_template("html/misc/default-home.html", header=f"Hello {user}!")
+    status_users = dbf.query_db(ecd.view_members.format(status=status.upper(), club_id = club_id))
+    return render_template("html/coordinator/member-view.html", status = status, status_users = status_users)
+
+
+@jean_blueprint.route("/memview/<status>", methods=["POST"])
+#Note, decided to take status arameter out here, may end up putting it back
+def save_member_details():
+    club_id = club_id
+    for user in status_users:
+        user_id = request.form["user_id"]
+        new_validity = request.form["validity"]
+        dbf.modify_db(ecd.save_members.format(user_id=user_id, club_id=club_id, NEW_VALIDITY=new_validity))
+
+
+
+
+
+
+#-----------------------------------------end of member view-----------------------------------------
+@jean_blueprint.route("/participantview/<status>")
 def parview(status):
     if "user" in session:
         user: str = session["user"]
         return render_template("html/misc/default-home.html", header=f"Hello {user}!")
 
     return render_template("html/coordinator/view-participants.html", status=status)
-
-
-@jean_blueprint.route("/participantview/<status>")
-def memview(status):
-    if "user" in session:
-        user: str = session["user"]
-        return render_template("html/misc/default-home.html", header=f"Hello {user}!")
-
-    return render_template("html/coordinator/member-view.html", status=status)
 
 
 @jean_blueprint.route("/eventview/<timeline>")
