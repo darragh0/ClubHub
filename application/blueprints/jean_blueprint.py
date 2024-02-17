@@ -74,6 +74,7 @@ def save_club_details():
     club_name = request.form["club_name"]
     club_description = request.form["club_description"]
     cf.save_club_details(club_id, club_name, club_description)
+    return redirect(url_for('jean_blueprint.cohome', club_id=club_id))
 #***********************************************************
 #-------------------end of coordinator dashboard--------------------------------------------------------------------------
 
@@ -95,12 +96,14 @@ def view_members(status):
 @jean_blueprint.route("/memview", methods=["POST"])
 #Note, decided to take status arameter out here, may end up putting it back
 def save_member_details():
-    club_id = 0
+    global club_id
     for user_id in request.form.getlist("user_id"):
-        new_validity = str(request.form.get("status")).upper()
+        new_validity = str(request.form.get(f"status_{user_id}")).upper()
+        print(f"New Validity: {new_validity}")
         cf.save_member_status(club_id, user_id, new_validity)
-        cf.delete_rejected_members(club_id)
         #call delete membershere
+    cf.delete_rejected_members(club_id)
+
     return redirect(url_for('jean_blueprint.cohome', club_id=club_id))
 
 
@@ -108,14 +111,36 @@ def save_member_details():
 
 
 #-----------------------------------------end of member view-----------------------------------------
-@jean_blueprint.route("/participantview/<status>")
-def parview(status):
+#---------------------------------------start of participant stuff-----------------------------------
+@jean_blueprint.route("/participantview/<status>/<event_id>", methods=["GET"])
+def parview(status, event_id):
     if "user" in session:
         user: str = session["user"]
         return render_template("html/misc/default-home.html", header=f"Hello {user}!")
+    status_pars = cf.get_all_participants(event_id, status)
+    event_name = cf.get_event_details(event_id)["event_name"]
+    return render_template("html/coordinator/view-participants.html", status=status, event_id=event_id, status_pars = status_pars, event_name = event_name)
 
-    return render_template("html/coordinator/view-participants.html", status=status)
 
+@jean_blueprint.route("/participantview", methods=["POST"])
+#Note, decided to take status arameter out here, may end up putting it back
+def save_participant_details():
+    event_id = request.form.get("event_id")
+    for user_id in request.form.getlist("user_id"):
+        new_validity = str(request.form.get(f"status_{user_id}")).upper()
+
+        print(f"New Validity: {new_validity}")
+        cf.save_participant_status(event_id = event_id, user_id = user_id, new_validity = new_validity)
+    cf.delete_rejected_participants(event_id = event_id)
+
+    return redirect(url_for('jean_blueprint.cohome', club_id= club_id))
+
+
+
+
+
+
+#---------------------------------------end of participant stuff-----------------------------------
 
 @jean_blueprint.route("/eventview/<timeline>")
 def see_events(timeline):
@@ -135,6 +160,7 @@ def new_event():
     return render_template("html/coordinator/single-event-view.html")
 
 #TODO have this write to database, probably will encounter same problem as before
+@jean_blueprint.route("/new-event", methods=["POST"])
 
 
 
@@ -146,6 +172,12 @@ def edit_event(event_id):
     event_details = cf.get_event_details(event_id)
     return render_template("html/coordinator/single-event-view.html",  event_name = event_details["event_name"], event_date=event_details["date_and_time"],
                             event_location=event_details["venue"], event_description=event_details["event_description"],)
+
+
+@jean_blueprint.route("/edit-event", methods=["POST"])
+
+
+
 
 #---------------------------------------end of single event--------------------------------------------------
 #TODO fix build error

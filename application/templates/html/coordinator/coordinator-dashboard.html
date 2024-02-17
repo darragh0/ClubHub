@@ -137,15 +137,15 @@
                 </span>
                 <span class="button-column">
                     <a class="btn btn-primary card-custom custom-hover"
-                        href="{{ url_for('jean_blueprint.parview', status='Approved') }}" role="button">
-                        Approved Participants
-                        <span class="badge bg-danger">{{ event.approved_participants }}</span>
-                    </a>
-                    <a class="btn btn-primary card-custom custom-hover"
-                        href="{{ url_for('jean_blueprint.parview', status='Pending') }}" role="button">
-                        Participant requests
-                        <span class="badge bg-danger">{{ event.pending_participants }}</span>
-                    </a>
+                    href="{{ url_for('jean_blueprint.parview', status='Approved', event_id=event.event_id) }}" role="button">
+                    Approved Participants
+                    <span class="badge bg-danger">{{ event.approved_participants }}</span>
+                </a>
+                <a class="btn btn-primary card-custom custom-hover"
+                    href="{{ url_for('jean_blueprint.parview', status='Pending', event_id=event.event_id) }}" role="button">
+                    Participant requests
+                    <span class="badge bg-danger">{{ event.pending_participants }}</span>
+                </a>
                 </span>
             </li>
         </ul>

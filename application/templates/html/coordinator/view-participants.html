@@ -8,6 +8,8 @@
 {% block header %}
     <header>
         <h1 style="color: white;">{{ header if header else "View your " ~ status ~ " participants" }}</h1>
+        <h2 class="text-center" style="color: white;">{{ event_name }}</h2>
+
     </header><br><br>
     <style>
         body {
@@ -31,35 +33,28 @@
         <div class="card-body">
             <h6 class="card-subtitle mb-2 dark_link">Click to edit participants status. Note: rejecting a participant
                 will delete them from the database. Click save to update.</h6>
-            <a class="btn btn-warning custom-button" href="{{ url_for('jean_blueprint.cohome') }}"
-               style="--bs-btn-font-size: .75rem;">Delete
-                rejected participants and save</a><br>
+<br>
 
-            <ul class="list-group">
-                <li class="list-group-item " style="background-color: var(--light-blue); color: white">
-                    User1 <br><br>
-                    <select class="form-select" aria-label="Default select example">
+        <form id="participantForm" action="{{ url_for('jean_blueprint.save_participant_details') }}" method="POST">
+            <input type="hidden" name="event_id" value="{{ event_id }}">
+
+            {% for user in status_pars %}
+                <li class="list-group-item" style="background-color: var(--light-blue); color: white">
+                    {{ user['first_name'] ~ ' ' ~ user['last_name'] }}<br><br>
+                    <select class="form-select" aria-label="Default select example" name="status_{{ user['user_id'] }}">
                         <option selected>{{ status }}</option>
-                        <option value="1">Approved</option>
-                        <option value="2">Pending</option>
-                        <option value="3">Rejected</option>
+                        <option value="APPROVED">Approved</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="REJECTED">Rejected</option>
                     </select>
+                    <!-- Add hidden input for user_id -->
+                    <input type="hidden" name="user_id" value="{{ user['user_id'] }}">
                 </li>
-                <li class="list-group-item " style="background-color: var(--light-blue); color: white">User2<br><br>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>{{ status }}</option>
-                        <option value="1">Approved</option>
-                        <option value="2">Pending</option>
-                        <option value="3">Rejected</option>
-                    </select></li>
-                <li class="list-group-item" style="background-color: var(--light-blue); color: white">User3<br><br>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>{{ status }}</option>
-                        <option value="1">Approved</option>
-                        <option value="2">Pending</option>
-                        <option value="3">Rejected</option>
-                    </select></li>
-
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-warning custom-button" style="--bs-btn-font-size: .75rem;">Delete rejected members and save</button>
+        </form>
+                    
                 <!-- Will have to change this to a for loop of some type -->
             </ul>
         </div>

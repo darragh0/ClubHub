@@ -108,8 +108,26 @@ def count_approved_participants(event_id):
     where event_id ={event_id} and validity = 'APPROVED'
     """ .format(event_id=event_id))[0][0])
 
+def get_all_participants(event_id, status):
+    return (dbf.query_db("""
+    select users.*
+    from users join event_participants on users.user_id = event_participants.user_id 
+    where event_participants.validity = '{status}' and event_participants.event_id = {event_id};
+    """.format(status=status.upper(), event_id = event_id)))
 
+def save_participant_status(event_id, user_id, new_validity):
+    dbf.modify_db("""
+    update event_participants
+    set validity = '{NEW_VALIDITY}', updated = CURRENT_TIMESTAMP
+    where user_id = {user_id} and event_id = {event_id};
+    """.format(user_id=user_id, event_id=event_id, NEW_VALIDITY=new_validity.upper()))
 
+def delete_rejected_participants(event_id):
+    dbf.modify_db("""
+    delete 
+    from event_participants
+    where validity = 'Rejected' and event_id = {event_id};
+    """.format(event_id=event_id))
 #-----------editing events---------------------
 def get_event_details(event_id):
     event_details = dbf.query_db("""

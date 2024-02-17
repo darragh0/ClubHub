@@ -38,12 +38,11 @@
                     {% for user in status_users %}
                         <li class="list-group-item" style="background-color: var(--light-blue); color: white">
                             {{ user['first_name'] ~ ' ' ~ user['last_name'] }}<br><br>
-                            <!-- add user's name!!!!!! -->
-                            <select class="form-select" aria-label="Default select example" name="status">
+                            <select class="form-select" aria-label="Default select example" name="status_{{ user['user_id'] }}">
                                 <option selected>{{ status }}</option>
-                                <option value="1">Approved</option>
-                                <option value="2">Pending</option>
-                                <option value="3">Rejected</option>
+                                <option value="APPROVED">Approved</option>
+                                <option value="PENDING">Pending</option>
+                                <option value="REJECTED">Rejected</option>
                             </select>
                             <!-- Add hidden input for user_id -->
                             <input type="hidden" name="user_id" value="{{ user['user_id'] }}">
@@ -53,7 +52,8 @@
                     <button type="submit" class="btn btn-warning custom-button" style="--bs-btn-font-size: .75rem;">Delete rejected members and save</button>
                 </form>
                 
-            <ul class="list-group light"></ul>
+                
+            <!-- <ul class="list-group light"></ul> -->
 
         </div>
     </div>
