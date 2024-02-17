@@ -9,8 +9,9 @@
 
     <style>
         body {
-            background-color: #03045e;
-        }
+            background-image: url("{{ url_for('static', filename='png/blue-background-flipped-xy.png') }}");
+            background-size: cover;
+            background-position: center center;        }
     </style>
 
     <div class="card card-custom ">
@@ -82,8 +83,9 @@
             </script>
         </div>
     </div>
+    <!-- this will actually go to event view post method, which will then call cohome -->
 
-    <a class="btn btn-primary" href="{{ url_for('jean_blueprint.see_events', timeline = 'Upcoming') }}" role="button">Save</a>
+    <a class="btn btn-primary" href="{{ url_for('jean_blueprint.cohome') }}" role="button">Save</a>
 
     <!--TODO Consider using date/time picker here if possible -->
 

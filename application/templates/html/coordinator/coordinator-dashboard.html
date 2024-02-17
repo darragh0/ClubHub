@@ -20,10 +20,12 @@
 
     <style>
         body {
-            background-color: var(--dark-blue);
+            background-image: url("{{ url_for('static', filename='png/blue-background-flipped-xy.png') }}");
+            background-size: cover;
+            background-position: center center;
         }
     </style>
-<!-- TODO I havent a notion what I'm at send help plz ...if I can get this example right I think I can do the rest-->
+    
     <!-- Club Description -->
     <form id="clubForm" action="{{ url_for('jean_blueprint.save_club_details', club_id=club_id) }}" method="POST">
         <!-- Club Description -->

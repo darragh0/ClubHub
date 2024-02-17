@@ -145,6 +145,7 @@ update club_memberships
 set validity = '{NEW_VALIDITY}', updated = CURRENT_TIMESTAMP
 where user_id = {user_id} and event_id = {event_id};
 """
+
 delete_participants = """
 delete 
 from event_participants
@@ -155,6 +156,7 @@ add_participant_member = """
 insert into event_participants(event_id, user_id, validity)
 values ({event_id}, {user_id}, 'Approved');
 """
+
 add_participant_non_member = """
 insert into event_participants(event_id, user_id)
 values ({event_id}, {user_id});"""
@@ -240,4 +242,3 @@ from events
 where club_id = {club_id} and date_and_time < CURRENT_TIMESTAMP;"""
 
 
-#TODO I've done this with string formatting, ask Darragh what the original idea was again as I have forgotten.
