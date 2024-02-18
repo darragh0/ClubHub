@@ -46,7 +46,7 @@ def cohome():
             event_details.append({
                 'event_id': event["event_id"],
                 'event_name': event["event_name"],
-                'event_date': event["date_and_time"],
+                'event_date': event["date"],
                 'approved_participants': number_of_approved_participants,
                 'pending_participants': number_of_pending_participants,
             })
@@ -147,8 +147,9 @@ def see_events(timeline):
     if "user" in session:
         user: str = session["user"]
         return render_template("html/misc/default-home.html", header=f"Hello {user}!")
+    timelined_events = cf.view_all_events(club_id, timeline)
 
-    return render_template("html/coordinator/multi-event-view.html", timeline=timeline)
+    return render_template("html/coordinator/multi-event-view.html", timeline=timeline, timelined_events=timelined_events)
 
 # ----------------------------Start of single event--------------------------------------------
 @jean_blueprint.route("/new-event")
@@ -161,6 +162,20 @@ def new_event():
 
 #TODO have this write to database, probably will encounter same problem as before
 @jean_blueprint.route("/new-event", methods=["POST"])
+def add_event():
+    event_name = request.form["name"]
+    event_date = request.form["date"]
+    event_time = request.form["time"]
+    event_location = request.form["venue"]
+    event_description = request.form["description"]
+
+    # Check if event_id is present in the form
+    event_id = request.form.get("event_id")
+
+    # If event_id is not present, add a new event
+    cf.add_event(club_id=club_id, event_name=event_name, event_date=event_date, event_time=event_time, event_location=event_location, event_description=event_description)
+
+    return redirect(url_for('jean_blueprint.cohome', club_id=club_id))
 
 
 
@@ -170,11 +185,19 @@ def edit_event(event_id):
         user: str = session["user"]
         return render_template("html/misc/default-home.html", header=f"Hello {user}!")
     event_details = cf.get_event_details(event_id)
-    return render_template("html/coordinator/single-event-view.html",  event_name = event_details["event_name"], event_date=event_details["date_and_time"],
+    return render_template("html/coordinator/single-event-view.html",event_id = event_id,  event_name = event_details["event_name"], event_date=event_details["date"],event_time=event_details["time"],
                             event_location=event_details["venue"], event_description=event_details["event_description"],)
 
 
-@jean_blueprint.route("/edit-event", methods=["POST"])
+@jean_blueprint.route("/edit-event/<int:event_id>", methods=["POST"])
+def update_event(event_id):
+    event_name = request.form["name"]
+    event_date = request.form["date"]
+    event_time = request.form["time"]
+    event_location = request.form["venue"]
+    event_description = request.form["description"]
+    cf.update_event(event_id, event_name,event_description, event_date, event_time, event_location, )
+    return redirect(url_for('jean_blueprint.cohome', club_id=club_id))
 
 
 
@@ -182,4 +205,3 @@ def edit_event(event_id):
 #---------------------------------------end of single event--------------------------------------------------
 #TODO fix build error
 # --------------End of Pages functions-----------------
-

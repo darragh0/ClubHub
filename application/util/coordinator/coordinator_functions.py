@@ -86,13 +86,17 @@ def delete_rejected_members(club_id):
     #to be continued
 #-------viewing events----------------------
 def limited_view_all_upcoming_events(club_id):
-    return (dbf.query_db("""
-    select *
-    from events
-    where club_id = {club_id} and date_and_time >= CURRENT_TIMESTAMP
-    order by date_and_time
-    limit {limit};
-    """.format(club_id=club_id, limit =5)))
+    from datetime import datetime
+
+    current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    return dbf.query_db("""
+        SELECT *
+        FROM events
+        WHERE club_id = {club_id} AND datetime(date || ' ' || time) >= CURRENT_TIMESTAMP
+        ORDER BY date
+        LIMIT {limit};
+    """.format(club_id=club_id, current_date=current_date, limit=5))
 
 def count_pending_participants(event_id):
     return (dbf.query_db("""
@@ -128,6 +132,23 @@ def delete_rejected_participants(event_id):
     from event_participants
     where validity = 'Rejected' and event_id = {event_id};
     """.format(event_id=event_id))
+
+def view_all_events(club_id, timeline):
+    if timeline == 'Past':
+        return dbf.query_db("""
+        select *
+        from events
+        where club_id = {club_id} and datetime(date || ' ' || time) < CURRENT_TIMESTAMP
+        order by date, time DESC;""".format(club_id=club_id))
+    else:
+        return dbf.query_db("""
+        select *
+        from events
+        where club_id = {club_id} and datetime(date || ' ' || time) >= CURRENT_TIMESTAMP
+        order by date, time;
+        """.format(club_id=club_id))
+                        
+                                    
 #-----------editing events---------------------
 def get_event_details(event_id):
     event_details = dbf.query_db("""
@@ -136,3 +157,16 @@ def get_event_details(event_id):
     where event_id = {event_id};
     """.format(event_id=event_id))[0]
     return event_details
+
+def add_event(club_id, event_name, event_description, event_date, event_time, event_location):
+    dbf.modify_db("""
+    insert into events(club_id, event_name, event_description, date, time, venue)
+    values({club_id}, '{event_name}', '{event_description}', '{date}', '{time}', '{event_location}');
+    """.format(club_id=club_id, event_name=event_name, event_description=event_description, date=event_date, time=event_time, event_location = event_location))
+
+def update_event(event_id, event_name, event_description, event_date, event_time ,event_location):
+    dbf.modify_db("""
+    update events
+    set event_name = '{event_name}', event_description = '{event_description}', venue = '{event_location}', date = '{date}', time = '{time}', updated = CURRENT_TIMESTAMP
+    where event_id = {event_id};
+    """.format(event_id=event_id, event_name=event_name, event_description=event_description, date=event_date, time=event_time, event_location = event_location))

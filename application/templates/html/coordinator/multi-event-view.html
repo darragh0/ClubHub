@@ -40,62 +40,30 @@
     <div class="card card-custom ">
         <div class="card-body">
             <h6 class="card-subtitle mb-2 dark_link">Click on an event to view details.</h6>
-            <ul class="list-group">
-                <li class="list-group-item" style="display: inline-flex">
-                    <span class="date-column dark_link">2024-10-12</span>
-                    <span class="event-name-column">
-              <a href="{{ url_for('jean_blueprint.edit_event', event_id = 0) }}" class="card-link dark_link">Really looooooooooong</a>
-            </span>
-                    <span class="button-column">
-              <a class="btn btn-primary card-custom custom-hover"
-                 href="{{ url_for('jean_blueprint.parview', status = 'Approved') }}" role="button">
-                 Approved Participants
-                <span class="badge bg-danger">45</span>
-              </a>
-              <a class="btn btn-primary card-custom custom-hover"
-                 href="{{ url_for('jean_blueprint.parview', status = 'Pending') }}" role="button">
-                Participant requests
-                <span class="badge bg-danger">99+</span>
-              </a>
-            </span>
-                </li>
-                <li class="list-group-item" style="display: inline-flex">
-                    <span class="date-column dark_link">2024-04-14</span>
-                    <span class="event-name-column">
-              <a href="{{ url_for('jean_blueprint.edit_event', event_id = 0) }}" class="card-link dark_link">Event2 name</a>
-            </span>
-                    <span class="button-column">
-              <a class="btn btn-primary card-custom custom-hover"
-                 href="{{ url_for('jean_blueprint.parview', status = 'Approved') }}" role="button">
-                 Approved Participants
-                <span class="badge bg-danger">45</span>
-              </a>
-              <a class="btn btn-primary card-custom custom-hover"
-                 href="{{ url_for('jean_blueprint.parview', status = 'Pending') }}" role="button">
-                Participant requests
-                <span class="badge bg-danger">99+</span>
-              </a>
-            </span>
-                </li>
-                <li class="list-group-item" style="display: inline-flex">
-                    <span class="date-column dark_link">2024-06-05</span>
-                    <span class="event-name-column">
-              <a href="{{ url_for('jean_blueprint.edit_event', event_id = 0) }}" class="card-link dark_link">Event3 name</a>
-            </span>
-                    <span class="button-column">
-              <a class="btn btn-primary card-custom custom-hover"
-                 href="{{ url_for('jean_blueprint.parview', status = 'Approved') }}" role="button">
-                 Approved Participants
-                <span class="badge bg-danger">45</span>
-              </a>
-              <a class="btn btn-primary card-custom custom-hover"
-                 href="{{ url_for('jean_blueprint.parview', status = 'Pending') }}" role="button">
-                Participant requests
-                <span class="badge bg-danger">99+</span>
-              </a>
-            </span>
-                </li>
-            </ul>
+            {% for event in timelined_events %}
+        <ul class="list-group">
+            <li class="list-group-item" style="display: inline-flex">
+                <span class="date-column dark_link">{{ event.date }}</span>
+                <span class="event-name-column">
+                    <a href="{{ url_for('jean_blueprint.edit_event', event_id=event.event_id) }}" class="card-link dark_link">{{ event.event_name }}</a>
+                </span>
+                <span class="button-column">
+                    <a class="btn btn-primary card-custom custom-hover"
+                    href="{{ url_for('jean_blueprint.parview', status='Approved', event_id=event.event_id) }}" role="button">
+                    Approved Participants
+                    <span class="badge bg-danger">{{ event.approved_participants }}</span>
+                </a>
+                <a class="btn btn-primary card-custom custom-hover"
+                    href="{{ url_for('jean_blueprint.parview', status='Pending', event_id=event.event_id) }}" role="button">
+                    Participant requests
+                    <span class="badge bg-danger">{{ event.pending_participants }}</span>
+                </a>
+                </span>
+            </li>
+        </ul>
+        {% endfor %}
+        <a class="btn btn-warning custom-button" href="{{ url_for('jean_blueprint.cohome') }}"
+        role="button">Back to dashboard</a>
         </div>
     </div>
 {% endblock %}

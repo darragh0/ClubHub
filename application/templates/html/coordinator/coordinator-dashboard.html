@@ -31,7 +31,7 @@
         <!-- Club Description -->
         <div class="card card-custom">
             <div class="card-body">
-                <h5 class="card-title white-txt" id="editable_text1" contenteditable="false">{{ club_title }}</h5>
+                <h5 class="card-title white-txt" id="editable_text1"  contenteditable="false">{{ club_title }} </h5>
                 <h6 class="card-subtitle mb-2 t vlight_blue_txt">Club description</h6>
                 <p class="card-text white-txt" id="editable_text2" contenteditable="false">{{ club_description }}</p>
                 <input type="hidden" name="club_id" value="{{ club_id }}">
@@ -40,7 +40,7 @@
                 <button type="button" class="btn btn-warning custom-button" onclick="toggleEditMode('editable_text1', 'club name', this, 'club_name_value');">Edit club name</button>
                 <button type="button" class="btn btn-warning custom-button" onclick="toggleEditMode('editable_text2', 'club description', this, 'club_description_value');">Edit description</button>
                 <button type="submit" class="btn btn-warning custom-button">Save changes</button>
-                
+                <!-- TODO maybe set club title to a default value of enter title?? or figure out how to do an actual placeholder. -->
             </div>
         </div>
     </form>
