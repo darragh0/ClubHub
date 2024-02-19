@@ -17,7 +17,7 @@
     <div class="card card-custom ">
         <a class="btn btn-warning custom-button" href="{{ url_for('jean_blueprint.cohome') }}"
         role="button">Back to dashboard</a>
-        <form method="POST" action="{{ url_for('jean_blueprint.add_event') if event_id else url_for('jean_blueprint.edit_event', event_id=event_id) }}">
+        <form method="POST" action="{% if event_id %}{{ url_for('jean_blueprint.edit_event', event_id=event_id) }}{% else %}{{ url_for('jean_blueprint.add_event') }}{% endif %}">
 
         <div class="mb-3 card-custom">
 

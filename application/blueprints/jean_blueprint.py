@@ -169,11 +169,7 @@ def add_event():
     event_location = request.form["venue"]
     event_description = request.form["description"]
 
-    # Check if event_id is present in the form
-    event_id = request.form.get("event_id")
-
-    # If event_id is not present, add a new event
-    cf.add_event(club_id=club_id, event_name=event_name, event_date=event_date, event_time=event_time, event_location=event_location, event_description=event_description)
+    cf.add_event(event_name=event_name, event_date=event_date, event_time=event_time, event_location=event_location, event_description=event_description)
 
     return redirect(url_for('jean_blueprint.cohome', club_id=club_id))
 
