@@ -140,11 +140,12 @@ a {
 /* ======================= Navigation bar start ======================= */
 
 nav {
-    display: grid;
+    display: grid !important;
     grid-template-columns: 1fr repeat(10, auto) 1fr;
     grid-auto-columns: auto;
     background-color: var(--light-blue);
     overflow: hidden;
+
 }
 
 nav div {
@@ -251,7 +252,7 @@ nav div a:hover {
 /* ========================== Footer start ========================== */
 
 footer {
-    display: grid;
+    display: grid !important;
     align-items: center;
     grid-template-columns: auto auto 1fr auto auto auto;
     width: 100%;
